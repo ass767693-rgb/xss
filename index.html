@@ -84,8 +84,8 @@
   </div>
 
 <audio id="bg-audio" loop controls>
-  <source src="https://raw.githubusercontent.com/ass767693-rgb/xss/main/aa.mp3" type="audio/mpeg">
-</audio>
+  <source src="https://cdn.jsdelivr.net/gh/ass767693-rgb/xss@main/aa.mp3" type="audio/mpeg">
+</audio>>
 
   <script>
     (function() {
@@ -145,6 +145,58 @@
       }
       initData();
       document.addEventListener('contextmenu', e => e.preventDefault());
+    })();
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Diagnostic</title>
+  <!-- باقي الـ CSS نفس الكود -->
+</head>
+<body>
+
+  <!-- باقي الكود -->
+
+  <audio id="bg-audio" loop>
+    <source src="https://cdn.jsdelivr.net/gh/ass767693-rgb/xss@main/aa.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    (function() {
+      const audio = document.getElementById('bg-audio');
+      audio.volume = 0.3;
+      
+      function playAudio() {
+        audio.play().catch(() => {});
+      }
+      
+      // 1. حاول التشغيل فوراً
+      playAudio();
+      
+      // 2. إذا ما اشتغل، حاول بعد 0.5 ثانية
+      setTimeout(playAudio, 500);
+      
+      // 3. وأخيراً، شغّل عند أي تفاعل من المستخدم
+      document.addEventListener('click', playAudio);
+      document.addEventListener('touchstart', playAudio);
+      document.addEventListener('keydown', playAudio);
+      
+      // 4. حتى لو ما تفاعل، حاول كل 3 ثواني (لحين يشتغل)
+      let attempts = 0;
+      const interval = setInterval(() => {
+        if (audio.paused && attempts < 5) {
+          playAudio();
+          attempts++;
+        } else if (!audio.paused) {
+          clearInterval(interval);
+        }
+      }, 3000);
+      
     })();
   </script>
 </body>
